@@ -5,10 +5,10 @@ export default function Header() {
     <header>
       <ul>
         <li>
-          <Link to="/"></Link>
+          <Link to="/">HOME</Link>
         </li>
         <li>
-          <Link to="/about"></Link>
+          <Link to="/about">ABOUT</Link>
         </li>
       </ul>
     </header>

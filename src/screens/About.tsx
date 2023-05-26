@@ -1,8 +1,7 @@
 export default function About() {
-  const useName: any = [];
   return (
     <>
-      <h1>About{useName[0].name}</h1>
+      <h1>About</h1>
     </>
   );
 }
