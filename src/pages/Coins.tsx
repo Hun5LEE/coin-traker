@@ -1,3 +1,6 @@
+// 수정 : 5.30
+// 역할 : 데이터를 받아와 Link state로 coin 데이터를 페이지에 뿌려줌
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
@@ -23,9 +26,10 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   a {
+    display: flex;
+    align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
-    display: block;
   }
   &:hover {
     a {
@@ -35,12 +39,17 @@ const Coin = styled.li`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 3rem;
   color: ${(props) => props.theme.accentColor};
 `;
 
 const Loader = styled.div`
   text-align: center;
+`;
+
+const Img = styled.img`
+  width: 2rem;
+  margin: 10px;
 `;
 
 interface CoinType {
@@ -64,7 +73,6 @@ export default function Coins() {
       setCoins(data.slice(0, 100));
       setLoading(false);
     })();
-    console.log(coins);
   }, []);
 
   return (
@@ -78,7 +86,13 @@ export default function Coins() {
         <CoinList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link to={`/${coin.id}`} state={{ name: coin.name }}>
+                <Img
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt=""
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinList>
