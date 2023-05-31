@@ -52,7 +52,7 @@ const Img = styled.img`
   margin: 10px;
 `;
 
-interface CoinType {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -63,7 +63,7 @@ interface CoinType {
 }
 
 export default function Coins() {
-  const [coins, setCoins] = useState<CoinType[]>([]);
+  const [coins, setCoins] = useState<ICoin[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
