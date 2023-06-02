@@ -2,11 +2,12 @@
 // 내용 : 라우팅, 글로벌 스타일지정(Reset Css)
 
 import { Routes, Route } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
 import Coins from "./pages/Coins";
 import Coin from "./pages/Coin";
-import { createGlobalStyle } from "styled-components";
 import Chart from "./pages/Chart";
 import Price from "./pages/Price";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Sans+KR&family=Source+Sans+Pro:wght@300;400&family=Square+Peg&family=Vina+Sans&display=swap');
@@ -80,6 +81,7 @@ function Root() {
           <Route path="price" element={<Price />} />
         </Route>
       </Routes>
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }
