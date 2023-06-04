@@ -68,7 +68,7 @@ const Tabs = styled.div`
   gap: 10px;
 `;
 
-const Tab = styled.span<{ isActive: boolean }>`
+const Tab = styled.div<{ isactive: string }>`
   text-align: center;
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -77,11 +77,15 @@ const Tab = styled.span<{ isActive: boolean }>`
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+    props.isactive === "true"
+      ? props.theme.accentColor
+      : props.theme.textColor};
   a {
     display: block;
   }
 `;
+// isActive로 작명시 React는 DOM요소에 사용자 정의 속성을 추가하는 것을 허용하지 않으므로
+// isactive로 작명후 true / false를 string으로 받은후 비교연산자로 "true" 체크;
 
 interface RouteState {
   state: {
@@ -202,10 +206,10 @@ export default function Coin() {
             </OverviewItem>
           </Overview>
           <Tabs>
-            <Tab isActive={chartMatch !== null}>
+            <Tab isactive={`${chartMatch !== null}`}>
               <Link to="chart">Chart</Link>
             </Tab>
-            <Tab isActive={priceMatch !== null}>
+            <Tab isactive={`${priceMatch !== null}`}>
               <Link to="price">Price</Link>
             </Tab>
           </Tabs>
