@@ -2,6 +2,7 @@
 // 기존 useEffect, useState이용했던것을 useQuery로 대체함
 
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 import {
   Link,
   Outlet,
@@ -157,7 +158,10 @@ export default function Coin() {
   );
   const { isLoading: priceLoading, data: priceData } = useQuery<IPriceData>(
     ["price", coinId],
-    () => fetchPriceData(coinId)
+    () => fetchPriceData(coinId),
+    {
+      refetchInterval: 5000,
+    }
   );
   // Link state로 받은 데이터정보
   const { state } = useLocation() as RouteState;
@@ -171,6 +175,11 @@ export default function Coin() {
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -190,8 +199,8 @@ export default function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>{priceData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
