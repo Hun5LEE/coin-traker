@@ -3,11 +3,15 @@
 
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "./theme";
 import Coins from "./pages/Coins";
 import Coin from "./pages/Coin";
 import Chart from "./pages/Chart";
 import Price from "./pages/Price";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Noto+Sans+KR&family=Source+Sans+Pro:wght@300;400&family=Square+Peg&family=Vina+Sans&display=swap');
@@ -63,6 +67,7 @@ body{
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
 	line-height: 1.2;
+  transition: background-color 0.5s;
 }
 a {
   text-decoration:  none;
@@ -71,17 +76,21 @@ a {
 `;
 
 function Root() {
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Coins />} />
-        <Route path="/:coinId" element={<Coin />}>
-          <Route path="chart" element={<Chart />} />
-          <Route path="price" element={<Price />} />
-        </Route>
-      </Routes>
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        {/* <button onClick={handleDark}>Switch</button> */}
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<Coins />} />
+          <Route path="/:coinId" element={<Coin />}>
+            <Route path="chart" element={<Chart />} />
+            <Route path="price" element={<Price />} />
+          </Route>
+        </Routes>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
