@@ -12,10 +12,20 @@ import {
 } from "react-router-dom";
 import { styled } from "styled-components";
 import { fetchInfoData, fetchPriceData } from "../api";
+import { useNavigate } from "react-router-dom";
 
 const Title = styled.h1`
   font-size: 3rem;
   color: ${(props) => props.theme.accentColor};
+`;
+
+const BackBtn = styled.button`
+  background-color: ${(props) => props.theme.bgColor};
+  border: none;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: ${(props) => props.theme.textColor};
+  cursor: pointer;
 `;
 
 const Loader = styled.div`
@@ -172,6 +182,7 @@ export default function Coin() {
 
   // useQuery의 isLoading이 두개이므로 둘다 아래처럼 설정
   const loading = infoLoading || priceLoading;
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -181,6 +192,7 @@ export default function Coin() {
         </title>
       </Helmet>
       <Header>
+        <BackBtn onClick={() => navigate("/")}>&larr;</BackBtn>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>

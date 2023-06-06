@@ -43,7 +43,7 @@ export default function Chart() {
             },
           ]}
           options={{
-            theme: { mode: isDark ? "light" : "dark" },
+            theme: { mode: isDark ? "dark" : "light" },
             chart: {
               height: 300,
               width: 500,
